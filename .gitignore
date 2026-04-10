@@ -1,0 +1,4 @@
+backup/
+nul
+%BACKUP_DIR%
+alice_log_*.txt
