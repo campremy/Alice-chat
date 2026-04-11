@@ -45,7 +45,9 @@ body {
 #alice-avatar img {
   width: 220px;
   max-width: 70%;
+  max-height: 18vh;    /* 画面高さの18%以上は使わない（iOS対応） */
   height: auto;
+  object-fit: contain;
   display: inline-block;
 }
 
