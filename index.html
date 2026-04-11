@@ -7,6 +7,10 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html {
+  height: 100%;        /* body の 100dvh を正しく機能させるための親の高さ確保 */
+}
+
 body {
   font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
   background: #1a1a2e;
@@ -96,9 +100,10 @@ body {
 /* 会話ログ */
 #chat-log {
   flex: 1;
-  min-height: 0; /* iOS Safari: flex子要素のスクロール有効化に必須 */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  min-height: 0;                      /* iOS Safari: flex子要素のスクロール有効化に必須 */
+  overflow-y: scroll;                 /* auto より確実（iOS対応） */
+  -webkit-overflow-scrolling: touch;  /* iOS慣性スクロール */
+  touch-action: pan-y;                /* タッチ操作を縦スクロールに明示的に許可 */
   padding: 8px 12px;
   display: flex;
   flex-direction: column;
