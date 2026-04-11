@@ -96,8 +96,9 @@ body {
 /* 会話ログ */
 #chat-log {
   flex: 1;
+  min-height: 0; /* iOS Safari: flex子要素のスクロール有効化に必須 */
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* iOS Safari スクロール対応 */
+  -webkit-overflow-scrolling: touch;
   padding: 8px 12px;
   display: flex;
   flex-direction: column;
