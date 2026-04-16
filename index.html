@@ -577,7 +577,7 @@ body {
       なかなか面白いと思っています。</p>
 
       <p>3分間限定です。<br>
-      カタカナで話しかけてみてください。</p>
+      カタカナで、なるべく読点「、」多めで、話しかけてみてください。</p>
 
       <p class="sc2a-section-break">* ── 開発者より</p>
 
@@ -2230,19 +2230,23 @@ const AND_PATTERNS = [
 
 // 返答を選ぶ（カタカナ縛り判定付き）
 function pickReply(text) {
-  // カタカナ主体でなければカタカナ縛り返答
+  // カタカナ主体でなければカタカナ縛り返答（元テキスト全体で判定）
   if (!isKatakanaMain(text)) {
     return KATAKANA_ONLY_REPLIES[Math.floor(Math.random() * KATAKANA_ONLY_REPLIES.length)];
   }
-  // カタカナ主体ならパターンマッチ（AND_PATTERNS優先）
+  // AND_PATTERNSは元テキスト全体で判定（現行と同じ）
   for (const pattern of AND_PATTERNS) {
     if (pattern.keywords.every(kw => text.includes(kw))) {
       return selectFromReplies(pattern.replies);
     }
   }
-  for (const pattern of PATTERNS) {
-    if (pattern.keywords.some(kw => text.includes(kw))) {
-      return selectFromReplies(pattern.replies);
+  // PATTERNSは読点「、」で分割したトークンごとに判定
+  const tokens = text.split("、").map(t => t.trim()).filter(t => t.length > 0);
+  for (const token of tokens) {
+    for (const pattern of PATTERNS) {
+      if (pattern.keywords.some(kw => token.includes(kw))) {
+        return selectFromReplies(pattern.replies);
+      }
     }
   }
   return selectFromReplies(DEFAULT_REPLIES);
