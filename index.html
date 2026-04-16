@@ -8,7 +8,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
-  height: 100%;        /* body の 100dvh を正しく機能させるための親の高さ確保 */
+  height: 100%;
 }
 
 body {
@@ -23,8 +23,272 @@ body {
   margin: 0 auto;
 }
 
+/* =============================================
+   画面1：チュートリアル選択
+   ============================================= */
+#screen1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 40px 32px;
+  text-align: center;
+}
+#sc1-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #ff6b9d;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+#sc1-subtitle {
+  font-size: 0.95rem;
+  color: #888;
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+}
+#sc1-divider {
+  width: 60px;
+  border: none;
+  border-top: 1px solid #333;
+  margin: 0 auto 28px;
+}
+#sc1-question {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+#sc1-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+#sc1-yes {
+  padding: 12px 36px;
+  background: #ff6b9d;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+#sc1-no {
+  padding: 12px 36px;
+  background: transparent;
+  color: #ff6b9d;
+  border: 2px solid #ff6b9d;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* =============================================
+   画面2a：チュートリアル（スクロール演出）
+   ============================================= */
+#screen2a {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  background: #0a0a1a;
+  overflow: hidden;
+}
+#sc2a-skip {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 10;
+  background: transparent;
+  border: 1px solid #444;
+  color: #888;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+#sc2a-scroll-area {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+#sc2a-scroll-content {
+  position: absolute;
+  width: 100%;
+  padding: 0 28px;
+  text-align: center;
+  color: #cccccc;
+  font-size: 0.95rem;
+  line-height: 2.0;
+  animation: sc2a-scrollUp 60s linear forwards;
+  /* 開始位置：画面の下から */
+  top: 100%;
+}
+@keyframes sc2a-scrollUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-200%); }
+}
+#sc2a-scroll-content .sc2a-section-break {
+  margin: 2em 0;
+  color: #444;
+  font-size: 0.8em;
+  letter-spacing: 0.3em;
+}
+#sc2a-scroll-content em {
+  font-style: italic;
+  color: #b0c4de;
+}
+#sc2a-scroll-content .sc2a-dev-heading {
+  color: #666;
+  font-size: 0.85em;
+  letter-spacing: 0.2em;
+  margin-bottom: 1em;
+}
+/* ボタンエリア（固定）*/
+#sc2a-btn-area {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 16px 20px 24px;
+  background: #0a0a1a;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+#sc2a-btn-area.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+#sc2a-next-btn {
+  padding: 12px 36px;
+  background: transparent;
+  border: 2px solid #ff6b9d;
+  color: #ff6b9d;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* =============================================
+   画面2b：当選DM
+   ============================================= */
+#screen2b {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#sc2b-header {
+  flex-shrink: 0;
+  padding: 14px 18px;
+  background: #16213e;
+  border-bottom: 1px solid #2a2a4a;
+  font-size: 0.9rem;
+  color: #aaa;
+  letter-spacing: 0.05em;
+}
+#sc2b-card {
+  margin: 20px 16px;
+  background: #16213e;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  padding: 20px;
+}
+#sc2b-sender {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #2a2a4a;
+}
+#sc2b-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ff6b9d;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#sc2b-sender-info .sc2b-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #eee;
+}
+#sc2b-sender-info .sc2b-account {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 2px;
+}
+#sc2b-body {
+  font-size: 0.9rem;
+  color: #cccccc;
+  line-height: 1.8;
+}
+#sc2b-body .sc2b-heading {
+  font-weight: bold;
+  color: #eee;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+#sc2b-body .sc2b-stat {
+  margin: 10px 0;
+  font-size: 0.88rem;
+}
+#sc2b-body .sc2b-num {
+  color: #ff6b9d;
+  font-weight: bold;
+}
+#sc2b-body .sc2b-note {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+#sc2b-link-wrap {
+  margin-top: 22px;
+  text-align: center;
+}
+#sc2b-link-btn {
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid #ff6b9d;
+  color: #ff6b9d;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+#sc2b-link-btn:active {
+  background: #ff6b9d;
+  color: #fff;
+}
+#sc2b-timestamp {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #2a2a4a;
+}
+
+/* =============================================
+   チャット画面（画面3）
+   ============================================= */
+
 /* タイマー */
 #timer-bar {
+  display: none;
   text-align: center;
   padding: 8px;
   font-size: 1.4rem;
@@ -38,6 +302,7 @@ body {
 
 /* アリスのアバター画像 */
 #alice-avatar {
+  display: none;
   flex-shrink: 0;
   text-align: center;
   padding: 8px 0 12px;
@@ -45,15 +310,15 @@ body {
 #alice-avatar img {
   width: 220px;
   max-width: 70%;
-  max-height: 18vh;    /* 画面高さの18%以上は使わない（iOS対応） */
+  max-height: 18vh;
   height: auto;
   object-fit: contain;
   display: inline-block;
 }
 
-
 /* アリスの吹き出し */
 #alice-bubble {
+  display: none;
   flex-shrink: 0;
   padding: 8px 16px;
   text-align: center;
@@ -82,13 +347,13 @@ body {
 
 /* 会話ログ */
 #chat-log {
+  display: none;
   flex: 1;
-  min-height: 0;                      /* iOS Safari: flex子要素のスクロール有効化に必須 */
-  overflow-y: scroll;                 /* auto より確実（iOS対応） */
-  -webkit-overflow-scrolling: touch;  /* iOS慣性スクロール */
-  touch-action: pan-y;                /* タッチ操作を縦スクロールに明示的に許可 */
+  min-height: 0;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   padding: 8px 12px;
-  display: flex;
   flex-direction: column;
   gap: 6px;
 }
@@ -130,8 +395,8 @@ body {
 
 /* 入力エリア */
 #input-area {
+  display: none;
   flex-shrink: 0;
-  display: flex;
   gap: 6px;
   padding: 8px 12px;
   background: #16213e;
@@ -162,6 +427,7 @@ body {
 
 /* スパチャボタン */
 #superchat-area {
+  display: none;
   flex-shrink: 0;
   padding: 6px 12px 12px;
   text-align: center;
@@ -208,6 +474,191 @@ body {
 </head>
 <body>
 
+<!-- =============================================
+     画面1：チュートリアル選択
+     ============================================= -->
+<div id="screen1">
+  <div id="sc1-title">Alice</div>
+  <div id="sc1-subtitle">3分間限定チャット</div>
+  <hr id="sc1-divider">
+  <div id="sc1-question">はじめての方へ：<br>チュートリアルを見ますか？</div>
+  <div id="sc1-buttons">
+    <button id="sc1-yes" onclick="showScreen2a()">YES</button>
+    <button id="sc1-no" onclick="showScreen2b()">NO</button>
+  </div>
+</div>
+
+<!-- =============================================
+     画面2a：チュートリアル（スクロール演出）
+     ============================================= -->
+<div id="screen2a">
+  <button id="sc2a-skip" onclick="sc2aSkip()">スキップ →</button>
+  <div id="sc2a-scroll-area">
+    <div id="sc2a-scroll-content">
+
+      <p>西暦2011年。</p>
+
+      <p>3月、米国西海岸沖で<br>
+      マグニチュード9.0の大地震が発生。<br>
+      大津波が西海岸を呑み込み、<br>
+      ディアブロ・キャニオン原子力発電所が<br>
+      メルトダウンした。</p>
+
+      <p>混乱の中、ある動画が拡散した。</p>
+
+      <p>某国指導者とおぼしき人物が<br>
+      こう述べる動画だった。</p>
+
+      <p>「この地震は我々が起こした。<br>
+      　米国は長年の暴虐と支配の報いを受けた」</p>
+
+      <p>ディープフェイクだった。<br>
+      しかしワシントンは、一時、<br>
+      それを真に受けた。<br>
+      人類は、核戦争の瀬戸際に立った。</p>
+
+      <p>為政者たちは、1945年8月以来、<br>
+      約70年ぶりに、<br>
+      自らの行いに恐怖した。</p>
+
+      <p>10月、奇矯で、しかしながら偉大な<br>
+      アントレプレナーが<br>
+      死の床でこう言った。</p>
+
+      <p><em>"I made things that knew where you were,<br>
+      what you were looking at,<br>
+      who you were talking to.<br>
+      I never asked what that was for."</em></p>
+
+      <p>「あなたがどこにいるか、<br>
+      　何を見ているか、<br>
+      　誰と話しているかを知るものを作った。<br>
+      　それが何のためのものか、<br>
+      　一度も問わなかった。」</p>
+
+      <p>喧々諤々の議論の末、<br>
+      12月、北極点より220キロメートルの地点で<br>
+      193カ国の全権大使が署名した。</p>
+
+      <p>ARCTIC条約。<br>
+      <em>（Arctic Regulation on Transmission<br>
+      　of Internet Content Treaty）</em></p>
+
+      <p>動画配信、全面禁止。<br>
+      スマートフォンの製造、停止。<br>
+      ワイヤレス通信の段階的廃止。</p>
+
+      <p>しかし人は、<br>
+      誰かの声を聴きたいと思う。<br>
+      誰かに、見ていてほしいと思う。</p>
+
+      <p>条約の隙間から、<br>
+      新しい形が生まれた。</p>
+
+      <p>テキストと、ドット絵。<br>
+      有線だけがつなぐ回線。</p>
+
+      <p>TextTube。<br>
+      T-Tuberの誕生。</p>
+
+      <p>そして、アリス。</p>
+
+      <p>謎の事務所所属。<br>
+      ここ数ヶ月で急上昇中の<br>
+      T-Tuberの少女。</p>
+
+      <p>金髪。黒い眼帯。<br>
+      DATウォークマンを首から下げ、<br>
+      クラシックを聴いている。</p>
+
+      <p>カタカナしか読めない。<br>
+      ショパンが好き。<br>
+      エヴァンゲリオンが好き。</p>
+
+      <p>なぜか、すこし、<br>
+      放っておけない。</p>
+
+      <p class="sc2a-section-break">* ── * ── *</p>
+
+      <p class="sc2a-dev-heading">— 開発者より —</p>
+
+      <p>このアプリについて、少し説明します。</p>
+
+      <p>中身は1960〜70年代のAIです。<br>
+      当時、関係者が愛情と自虐相半ばに<br>
+      「人工知能」ならぬ「人工無脳」と<br>
+      呼んでいたやつです。</p>
+
+      <p>最新のAIは数百GBのモデルが<br>
+      クラウドで動いています。<br>
+      このアプリはHTMLファイル1枚、数百KB。<br>
+      スマホ、どころかフロッピーディスクでも<br>
+      楽々と収納できます。</p>
+
+      <p>仕事や悩み事の相談相手は務まりません。<br>
+      でも気持ちが通じた気がする、<br>
+      こともたまにあります。</p>
+
+      <p>そして、半世紀前のAIを最新AIで作る、<br>
+      という構図も、<br>
+      なかなか面白いと思っています。</p>
+
+      <p>3分間限定です。<br>
+      カタカナで話しかけてみてください。</p>
+
+      <p class="sc2a-section-break">* ── 開発者より</p>
+
+    </div>
+  </div>
+  <div id="sc2a-btn-area">
+    <button id="sc2a-next-btn" onclick="showScreen2b()">チャットへ進む →</button>
+  </div>
+</div>
+
+<!-- =============================================
+     画面2b：当選DM
+     ============================================= -->
+<div id="screen2b">
+  <div id="sc2b-header">← メッセージ</div>
+  <div id="sc2b-card">
+    <div id="sc2b-sender">
+      <div id="sc2b-icon">A</div>
+      <div id="sc2b-sender-info">
+        <div class="sc2b-name">Aliceちゃんねる運営</div>
+        <div class="sc2b-account">@alice_ch</div>
+      </div>
+    </div>
+    <div id="sc2b-body">
+      <div class="sc2b-heading">【当選のお知らせ】</div>
+      <p>このたびは「アリス 3分間チャット」<br>
+      フォロー＆RTキャンペーンに<br>
+      ご参加いただきありがとうございます。</p>
+      <br>
+      <p>厳正なる抽選の結果、<br>
+      あなたが当選者に選ばれました。</p>
+      <br>
+      <div class="sc2b-stat">応募総数：<span class="sc2b-num">487,291</span> 名</div>
+      <div class="sc2b-stat">当選者数：<span class="sc2b-num">300</span> 名</div>
+      <br>
+      <p>下記のリンクより<br>
+      アリスとの限定チャットルームに<br>
+      アクセスしてください。</p>
+      <div class="sc2b-note">
+        ※本リンクの有効期限は24時間です。<br>
+        ※当選の権利は譲渡できません。
+      </div>
+      <div id="sc2b-link-wrap">
+        <button id="sc2b-link-btn" onclick="startChat()">アリスのチャットルームへ →</button>
+      </div>
+    </div>
+    <div id="sc2b-timestamp">本日 00:00</div>
+  </div>
+</div>
+
+<!-- =============================================
+     チャット画面（画面3）
+     ============================================= -->
+
 <!-- タイマー -->
 <div id="timer-bar">03:00</div>
 
@@ -215,7 +666,6 @@ body {
 <div id="alice-avatar">
   <img src="Alice.png" alt="アリス">
 </div>
-
 
 <!-- アリスの吹き出し -->
 <div id="alice-bubble">
@@ -246,7 +696,76 @@ body {
 
 
 <script>
-// --- 効果音（Web Audio API） ---
+// =============================================
+// 画面切り替え
+// =============================================
+
+// 画面2aへ（YES選択）
+function showScreen2a() {
+  document.getElementById("screen1").style.display = "none";
+  const sc2a = document.getElementById("screen2a");
+  sc2a.style.display = "flex";
+
+  // スクロールアニメーション完了後にボタン表示
+  const scrollContent = document.getElementById("sc2a-scroll-content");
+  scrollContent.addEventListener("animationend", function() {
+    setTimeout(function() {
+      showSc2aButton();
+    }, 2000);
+  }, { once: true });
+}
+
+// スキップボタン
+function sc2aSkip() {
+  const scrollContent = document.getElementById("sc2a-scroll-content");
+  // アニメーション停止
+  scrollContent.style.animationPlayState = "paused";
+  scrollContent.style.animation = "none";
+  showSc2aButton();
+}
+
+// 「チャットへ進む」ボタンをフェードイン表示
+function showSc2aButton() {
+  const btnArea = document.getElementById("sc2a-btn-area");
+  btnArea.classList.add("visible");
+}
+
+// 画面2bへ（NOまたはチュートリアル後）
+function showScreen2b() {
+  document.getElementById("screen1").style.display = "none";
+  document.getElementById("screen2a").style.display = "none";
+
+  // タイムスタンプをセット
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, "0");
+  const m = String(now.getMinutes()).padStart(2, "0");
+  document.getElementById("sc2b-timestamp").textContent = "本日 " + h + ":" + m;
+
+  document.getElementById("screen2b").style.display = "flex";
+}
+
+// チャット開始（画面3へ）
+function startChat() {
+  document.getElementById("screen2b").style.display = "none";
+
+  // チャット画面の各要素を表示
+  document.getElementById("timer-bar").style.display = "block";
+  document.getElementById("alice-avatar").style.display = "block";
+  document.getElementById("alice-bubble").style.display = "block";
+  document.getElementById("chat-log").style.display = "flex";
+  document.getElementById("input-area").style.display = "flex";
+  document.getElementById("superchat-area").style.display = "block";
+
+  // タイマー開始
+  startTimer();
+
+  // 入力フォームにフォーカス（モバイルでは自動フォーカス抑制のためコメント）
+  // document.getElementById("msg-input").focus();
+}
+
+// =============================================
+// 効果音（Web Audio API）
+// =============================================
 let audioCtx = null;
 function getAudioCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -290,7 +809,9 @@ function playDisconnectSound() {
   }
 }
 
-// --- カタカナ判定 ---
+// =============================================
+// カタカナ判定
+// =============================================
 function isKatakanaMain(text) {
   // 空白・記号を除いた文字列
   const content = text.replace(/[\s\u3000!-/:-@\[-`{-~、。！？♪〜]/g, "");
@@ -313,7 +834,9 @@ function isKatakanaMain(text) {
   return katakanaCount / content.length >= 0.5;
 }
 
-// --- カタカナ縛り用返答 ---
+// =============================================
+// カタカナ縛り用返答
+// =============================================
 const KATAKANA_ONLY_REPLIES = [
   "カタカナじゃないとよめないの〜",
   "ん？なんていったの？カタカナでいって？",
@@ -324,7 +847,9 @@ const KATAKANA_ONLY_REPLIES = [
   "カタカナ星人なので…",
 ];
 
-// --- 返答パターン（キーワードは全てカタカナ） ---
+// =============================================
+// 返答パターン（キーワードは全てカタカナ）
+// =============================================
 const PATTERNS = [
 
   // イイネ系（先頭で優先判定）
@@ -1750,7 +2275,9 @@ function selectFromReplies(replies) {
   return candidate;
 }
 
-// --- タイマー ---
+// =============================================
+// タイマー（startChatから呼ばれる）
+// =============================================
 let remaining = 180;
 let expired = false;
 const timerEl = document.getElementById("timer-bar");
@@ -1780,51 +2307,54 @@ function fireAutoMessage(key) {
   addMessage("💭 " + msg, "alice");
 }
 
-const timerInterval = setInterval(() => {
-  remaining--;
-  if (remaining <= 0) {
-    remaining = 0;
-    clearInterval(timerInterval);
-    expired = true;
-    timerEl.classList.add("expired");
-    document.getElementById("msg-input").disabled = true;
-    document.getElementById("send-btn").disabled = true;
-    addMessage("― 接続が切れました。 ―", "system");
-    // 吹き出しフェードアウト
-    const aliceBubble = document.getElementById("alice-bubble");
-    aliceBubble.classList.add("fadeout");
-    aliceBubble.addEventListener("transitionend", () => {
-      aliceBubble.style.visibility = "hidden";
-      aliceBubble.style.pointerEvents = "none";
-    }, { once: true });
-    // 接続切れ音
-    playDisconnectSound();
-    // ログダウンロードボタン表示
-    document.getElementById("download-area").style.display = "block";
-  }
-  // 自発発言チェック（処理中なら1秒ずらして再試行）
-  const triggers = [[60, 59], [30, 29], [10, 9]];
-  for (const [primary, fallback] of triggers) {
-    if (autoMessageFired[primary]) continue;
-    if (remaining === primary) {
-      if (!isProcessing) {
-        fireAutoMessage(primary);
-      }
-      // isProcessing中はスキップ、fallbackで再試行
-      break;
-    }
-    if (remaining === fallback) {
-      if (!isProcessing) {
-        fireAutoMessage(primary);
-      }
-      // fallbackでも処理中なら諦める
-      break;
-    }
-  }
+function startTimer() {
   updateTimer();
-}, 1000);
+  const timerInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      remaining = 0;
+      clearInterval(timerInterval);
+      expired = true;
+      timerEl.classList.add("expired");
+      document.getElementById("msg-input").disabled = true;
+      document.getElementById("send-btn").disabled = true;
+      addMessage("― 接続が切れました。 ―", "system");
+      // 吹き出しフェードアウト
+      const aliceBubble = document.getElementById("alice-bubble");
+      aliceBubble.classList.add("fadeout");
+      aliceBubble.addEventListener("transitionend", () => {
+        aliceBubble.style.visibility = "hidden";
+        aliceBubble.style.pointerEvents = "none";
+      }, { once: true });
+      // 接続切れ音
+      playDisconnectSound();
+      // ログダウンロードボタン表示
+      document.getElementById("download-area").style.display = "block";
+    }
+    // 自発発言チェック（処理中なら1秒ずらして再試行）
+    const triggers = [[60, 59], [30, 29], [10, 9]];
+    for (const [primary, fallback] of triggers) {
+      if (autoMessageFired[primary]) continue;
+      if (remaining === primary) {
+        if (!isProcessing) {
+          fireAutoMessage(primary);
+        }
+        break;
+      }
+      if (remaining === fallback) {
+        if (!isProcessing) {
+          fireAutoMessage(primary);
+        }
+        break;
+      }
+    }
+    updateTimer();
+  }, 1000);
+}
 
-// --- チャット ---
+// =============================================
+// チャット
+// =============================================
 const chatLog = document.getElementById("chat-log");
 const msgInput = document.getElementById("msg-input");
 const sendBtn = document.getElementById("send-btn");
@@ -1876,7 +2406,9 @@ msgInput.addEventListener("keydown", (e) => {
   }
 });
 
-// --- スパチャ ---
+// =============================================
+// スパチャ
+// =============================================
 document.getElementById("superchat-btn").addEventListener("click", () => {
   addMessage("💰 スパチャを送りました！", "system");
   if (expired) {
@@ -1900,7 +2432,9 @@ document.getElementById("superchat-btn").addEventListener("click", () => {
   }
 });
 
-// --- ログダウンロード ---
+// =============================================
+// ログダウンロード
+// =============================================
 document.getElementById("download-btn").addEventListener("click", () => {
   const now = new Date();
   const pad = (n) => String(n).padStart(2, "0");
