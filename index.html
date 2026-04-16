@@ -97,39 +97,18 @@ body {
   background: #0a0a1a;
   overflow: hidden;
 }
-#sc2a-skip {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  z-index: 10;
-  background: transparent;
-  border: 1px solid #444;
-  color: #888;
-  font-size: 0.8rem;
-  padding: 6px 14px;
-  border-radius: 16px;
-  cursor: pointer;
-}
 #sc2a-scroll-area {
   flex: 1;
-  overflow: hidden;
-  position: relative;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 #sc2a-scroll-content {
-  position: absolute;
   width: 100%;
   padding: 0 28px;
   text-align: center;
   color: #cccccc;
   font-size: 0.95rem;
   line-height: 2.0;
-  animation: sc2a-scrollUp 60s linear forwards;
-  /* 開始位置：画面の下から */
-  top: 100%;
-}
-@keyframes sc2a-scrollUp {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-200%); }
 }
 #sc2a-scroll-content .sc2a-section-break {
   margin: 2em 0;
@@ -153,11 +132,6 @@ body {
   text-align: center;
   padding: 16px 20px 24px;
   background: #0a0a1a;
-  opacity: 0;
-  transition: opacity 1s ease;
-  pointer-events: none;
-}
-#sc2a-btn-area.visible {
   opacity: 1;
   pointer-events: auto;
 }
@@ -492,7 +466,6 @@ body {
      画面2a：チュートリアル（スクロール演出）
      ============================================= -->
 <div id="screen2a">
-  <button id="sc2a-skip" onclick="sc2aSkip()">スキップ →</button>
   <div id="sc2a-scroll-area">
     <div id="sc2a-scroll-content">
 
@@ -703,31 +676,7 @@ body {
 // 画面2aへ（YES選択）
 function showScreen2a() {
   document.getElementById("screen1").style.display = "none";
-  const sc2a = document.getElementById("screen2a");
-  sc2a.style.display = "flex";
-
-  // スクロールアニメーション完了後にボタン表示
-  const scrollContent = document.getElementById("sc2a-scroll-content");
-  scrollContent.addEventListener("animationend", function() {
-    setTimeout(function() {
-      showSc2aButton();
-    }, 2000);
-  }, { once: true });
-}
-
-// スキップボタン
-function sc2aSkip() {
-  const scrollContent = document.getElementById("sc2a-scroll-content");
-  // アニメーション停止
-  scrollContent.style.animationPlayState = "paused";
-  scrollContent.style.animation = "none";
-  showSc2aButton();
-}
-
-// 「チャットへ進む」ボタンをフェードイン表示
-function showSc2aButton() {
-  const btnArea = document.getElementById("sc2a-btn-area");
-  btnArea.classList.add("visible");
+  document.getElementById("screen2a").style.display = "flex";
 }
 
 // 画面2bへ（NOまたはチュートリアル後）
