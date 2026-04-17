@@ -2461,8 +2461,14 @@ function addMessage(text, cls) {
   chatHistory.push(label + " " + text);
 }
 
+function toKatakana(str) {
+  return str.replace(/[\u3041-\u3096]/g, ch =>
+    String.fromCharCode(ch.charCodeAt(0) + 0x60)
+  );
+}
+
 function sendMessage() {
-  const text = msgInput.value.trim();
+  const text = toKatakana(msgInput.value.trim());
   if (!text || expired) return;
   msgInput.value = "";
 
